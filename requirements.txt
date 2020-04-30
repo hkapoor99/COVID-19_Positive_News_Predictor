@@ -1,5 +1,8 @@
 django
+django-extensions
+gunicron
 bs4
 requests
 datetime
 keras
+whitenoise
