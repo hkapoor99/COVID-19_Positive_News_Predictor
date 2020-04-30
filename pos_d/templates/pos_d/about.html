@@ -1,0 +1,23 @@
+{% extends "pos_d/base.html" %}
+{% block list %}
+<div class="list-group">
+  <a href="{% url 'index' %}" class="list-group-item list-group-item-action">Latest</a>
+  <a href="{% url 'sevendays' %}" class="list-group-item list-group-item-action">Last 7 Days</a>
+  <a href="{% url 'thirtydays' %}" class="list-group-item list-group-item-action">Last 30 Days</a>
+</div>
+<br>
+<div class="list-group">
+  <a href="{% url 'about' %}" class="list-group-item list-group-item-action active">About</a>
+</div>
+{% endblock %}
+{% block card %}
+<div class="col-md-9">
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="card-body">
+        <h6 class="card-title" id="card_headline">About</h6>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

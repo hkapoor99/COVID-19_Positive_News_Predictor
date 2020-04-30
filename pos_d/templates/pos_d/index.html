@@ -1,0 +1,59 @@
+{% extends "pos_d/base.html" %}
+{% block java%}
+<script type="text/javascript">
+let counter = 1;
+document.addEventListener('DOMContentLoaded', function() {
+  var headline = {{ Headlines|safe}} ;
+  var description = {{ Descriptions|safe}} ;
+  var bottom = {{ BottomTexts|safe}} ;
+  var image = {{ ImageURLs|safe}} ;
+  var date = {{ Dates|safe }};
+  document.querySelector('#next').onclick = function() {
+    if (counter >= headline.length) {
+      document.querySelector('#card_headline').innerHTML = "No More Articles.";
+      document.querySelector('#card_des').innerHTML = "Try another date parameter";
+      document.querySelector('#card_bottom').innerHTML = "";
+      document.querySelector('#card_img').src = "";
+      document.querySelector('#card_date').innerHTML = "";
+    } else {
+      document.querySelector('#card_headline').innerHTML = headline[counter];
+      document.querySelector('#card_des').innerHTML = description[counter];
+      document.querySelector('#card_bottom').href = bottom[counter];
+      document.querySelector('#card_img').src = image[counter];
+      document.querySelector('#card_date').innerHTML = date[counter];
+    }
+    counter += 1;
+  };
+});
+</script>
+{% endblock %}
+{% block list %}
+<div class="list-group">
+  <a href="{% url 'index' %}" class="list-group-item list-group-item-action active">Latest</a>
+  <a href="{% url 'sevendays' %}" class="list-group-item list-group-item-action">Last 7 Days</a>
+  <a href="{% url 'thirtydays' %}" class="list-group-item list-group-item-action">Last 30 Days</a>
+</div>
+<br>
+<div class="list-group">
+  <a href="{% url 'about' %}" class="list-group-item list-group-item-action">About</a>
+</div>
+{% endblock %}
+{% block card %}
+<div class="col-md-9">
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{ ImageURLs.0 }}" class="card-img" id="card_img" >
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" id="card_headline">{{ Headlines.0 }}</h5>
+          <p class="card-text"><small class="text-muted" id="card_date">{{ Dates.0 }}</small></p>
+          <p class="card-text text-truncate" id="card_des">{{ Descriptions.0 }}</p>
+          <p class="card-text"><a href="" id="card_bottom"><small class="text-muted">View full article here</small></a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
