@@ -42,6 +42,26 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 {% endblock %}
+
+{% block mobilemenu %}
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="{% url 'index' %}">Latest</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'sevendays' %}">Last 7 days<span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'thirtydays' %}">Last 30 days</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'about' %}">About</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
 {% block list %}
 <div class="list-group">
   <a href="{% url 'index' %}" class="list-group-item list-group-item-action">Latest</a>

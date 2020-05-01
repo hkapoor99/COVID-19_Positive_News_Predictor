@@ -6,8 +6,8 @@ body {
   font-size: 50px;
   color: #0e4b00;
   padding: 50px;
-  font-weight: bold;
-  font-family: "Helvetica", "Arial Narrow", sans-serif;
+  font-weight: 500;
+  font-family: 'Fira Sans Condensed', sans-serif;
   text-align: left;
 }
 #card_des{
@@ -21,9 +21,11 @@ body {
   padding:0px;
 }
 #footer_img{
+  height: 50px;
   width:100%;
   position: fixed;
   bottom: 0px;
+
 }
 
 #footer_mob_img{
@@ -40,6 +42,24 @@ body {
   border-color: #28a745;
 }
 
+.bg-light {
+  background-color: #bee6b5!important;
+  border-radius: .25rem;
+}
+
+.navbar-light .navbar-toggler{
+  color: #0e4b00;
+  border-color: #0e4b00;
+}
+
+
+.navbar-light .navbar-nav .active>.nav-link{
+  color: #0e4b00;
+}
+.btn-success{
+  background-color: #206410;
+  border-color: #206410;
+}
 #menu{
   text-align: center;
 }
@@ -50,7 +70,7 @@ body {
   }
   #Header{
     font-size: 30px;
-    padding: 20px;
+    padding: 15px;
     padding-bottom: 0px;
   }
   #row2{
