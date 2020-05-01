@@ -2,8 +2,7 @@ django
 bs4
 requests
 datetime
-keras.preprocessing
-keras.models
+keras==2.2.5
 whitenoise
 gunicorn
-tensorflow
+tensorflow==1.14
