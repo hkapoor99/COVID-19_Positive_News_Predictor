@@ -69,8 +69,9 @@ body {
     display:none;
   }
   #Header{
-    font-size: 30px;
+    font-size: 25px;
     padding: 15px;
+    padding-left: 30px;
     padding-bottom: 0px;
   }
   #row2{
