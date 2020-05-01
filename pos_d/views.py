@@ -8,9 +8,11 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
 from keras.models import load_model
 from keras.models import model_from_json
+from keras.backend import clear_session
 
 # Create your views here.
 def index(request):
+    clear_session()
     with open('models/tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
 
