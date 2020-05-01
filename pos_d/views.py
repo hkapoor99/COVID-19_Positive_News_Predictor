@@ -40,7 +40,10 @@ def index(request):
             dates.append(i.find("span", {"clas": "date"}).text)
             imageurls.append(i.find("div", {"class": "news-card-image"}).get("style").replace("background-image: url(\'", "").replace("?\')", ""))
             descriptions.append(i.find("div", {"itemprop": "articleBody"}).text)
-            sources.append(i.find("a", {"class": "source"}).get("href"))
+            if i.find("a", {"class": "source"}) is None:
+                sources.append("www.covid-positive-news.herokuapp.com")
+            else:
+                sources.append(i.find("a", {"class": "source"}).get("href"))
         else:
             continue;
 
