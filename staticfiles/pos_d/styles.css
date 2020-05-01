@@ -1,0 +1,52 @@
+body {
+    background-color: #dffada;
+}
+
+#Header {
+  font-size: 50px;
+  color: #0e4b00;
+  padding: 50px;
+  font-weight: bold;
+  font-family: "Helvetica", "Arial Narrow", sans-serif;
+  text-align: left;
+}
+#card_des{
+  font-size:13px;
+}
+
+#row2{
+  display: none;
+}
+#footer{
+  padding:0px;
+}
+#footer_img{
+  width:100%;
+}
+
+#card_img{
+  max-height: 300px;
+}
+
+.list-group-item.active {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+#menu{
+  text-align: center;
+}
+
+@media (max-width: 769px) {
+  #menu{
+    display:none;
+  }
+  #Header{
+    font-size: 30px;
+    padding: 20px;
+    padding-bottom: 0px;
+  }
+  #row2{
+    display:inline;
+  }
+}
