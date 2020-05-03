@@ -41,7 +41,7 @@ def index(request):
         t = i.find("span", {"itemprop": "headline"}).text + " " + i.find("div", {"itemprop": "articleBody"}).text
         text = [t]
         twt = tokenizer.texts_to_sequences(text)
-        twt = pad_sequences(twt, maxlen=19, dtype='int32', value=0)
+        twt = pad_sequences(twt, maxlen=86, dtype='int32', value=0)
         sentiment_c = loaded_model_c.predict(twt, batch_size=1, verbose=2)[0]
         sentiment_s = loaded_model_s.predict(twt, batch_size=1, verbose=2)[0]
         if sentiment_c[1] > 0.5 and sentiment_s[1]>0.8:
