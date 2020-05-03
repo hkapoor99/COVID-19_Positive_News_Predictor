@@ -1,5 +1,12 @@
 {% extends "pos_d/base.html" %}
 
+{% block java %}
+<style type="text/css">
+  #footer_img{
+    position: relative;
+  }
+</style>
+{% endblock %}
 {% block mobilemenu %}
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
   <ul class="navbar-nav mr-auto">
@@ -10,7 +17,7 @@
       <a class="nav-link" href="{% url 'sevendays' %}">Last 7 days</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'thirtydays' %}">Last 30 days</a>
+      <a class="nav-link" href="{% url 'fifteendays' %}">Last 15 days</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{% url 'about' %}">About<span class="sr-only">(current)</span></a>
@@ -23,7 +30,7 @@
 <div class="list-group">
   <a href="{% url 'index' %}" class="list-group-item list-group-item-action">Latest</a>
   <a href="{% url 'sevendays' %}" class="list-group-item list-group-item-action">Last 7 Days</a>
-  <a href="{% url 'thirtydays' %}" class="list-group-item list-group-item-action">Last 30 Days</a>
+  <a href="{% url 'fifteendays' %}" class="list-group-item list-group-item-action">Last 15 Days</a>
 </div>
 <br>
 <div class="list-group">
@@ -35,7 +42,17 @@
   <div class="card mb-3">
     <div class="row no-gutters">
       <div class="card-body">
-        <h6 class="card-title" id="card_headline">About</h6>
+        <h4 class="card-title" id="card_headline">About</h4>
+        <br>
+        <h6 class="card-title" id="card_headline">- How it works</h6>
+        <p class="card-text">It collects live news from <a href="www.inshorts.com/en/national">Inshorts.com</a> and runs two pre-trained deep learning LSTM models on each article. First model classifies if the article is related to the COVID-19 pandemic and the second runs a sentiment analysis. The article is displayed only if it is predicted to be positive.</p>
+        <p class="card-text">The models stored in the backend are trained on labelled Inshorts news data starting from 01 March, 2020. The data has 4000+ data points and was extracted from Inshort’s website using BS4 and Selenium. It was then labelled on the basis of topic as well as sentiment. The dataset has been uploaded on Kaggle for further NLP research (<a href="">Link</a>).</p>
+        <h6 class="card-title" id="card_headline">- Accuracy</h6>
+        <p class="card-text">The combined accuracy of the two models is <b>80%</b> approximately.<p>
+        <h6 class="card-title" id="card_headline">- Contact</h6>
+        <p class="card-text">You can find the code of this project on <a href="">Github</a>.<br> For feedback and queries contact me at hrshtkpr4@gmail.com<p>
+        <br>
+        <p class="card-title">This project is only for educational purposes. No plagiarism is intended.</p>
       </div>
     </div>
   </div>

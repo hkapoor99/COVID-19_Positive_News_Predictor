@@ -94,10 +94,10 @@ def sevendays(request):
     date2 = []
     for i in data["Date"]:
         date2.append(datetime.strptime(i, '%Y-%m-%d').date())
-    data["Date"] = date2
-    data_30 = data.loc[data["Date"] >= (datetime.now().date() - timedelta(days=7))]
+    data["Date2"] = date2
+    data_7 = data.loc[data["Date2"] >= (datetime.now().date() - timedelta(days=7))]
 
-    for i, row  in data_30.iterrows() :
+    for i, row  in data_7.iterrows() :
         t = row["Text"]
         text = [t]
         twt = tokenizer.texts_to_sequences(text)
@@ -122,7 +122,7 @@ def sevendays(request):
     }
     return render(request, "pos_d/7days.html", context)
 
-def thirtydays(request):
+def fifteendays(request):
     with open('models/tokenizer_c.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
 
@@ -148,10 +148,10 @@ def thirtydays(request):
     date2 = []
     for i in data["Date"]:
         date2.append(datetime.strptime(i, '%Y-%m-%d').date())
-    data["Date"] = date2
-    data_7 = data.loc[data["Date"] >= (datetime.now().date() - timedelta(days=30))]
+    data["Date2"] = date2
+    data_15 = data.loc[data["Date2"] >= (datetime.now().date() - timedelta(days=15))]
 
-    for i, row  in data_7.iterrows() :
+    for i, row  in data_15.iterrows() :
         t = row["Text"]
         text = [t]
         twt = tokenizer.texts_to_sequences(text)
@@ -174,7 +174,7 @@ def thirtydays(request):
         "ImageURLs": imageurls,
         "Dates" : dates
     }
-    return render(request, "pos_d/30days.html", context)
+    return render(request, "pos_d/15days.html", context)
 
 def about(request):
     return render(request, "pos_d/about.html")

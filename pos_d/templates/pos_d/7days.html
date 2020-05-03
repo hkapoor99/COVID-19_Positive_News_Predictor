@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a class="nav-link" href="{% url 'sevendays' %}">Last 7 days<span class="sr-only">(current)</span></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'thirtydays' %}">Last 30 days</a>
+      <a class="nav-link" href="{% url 'fifteendays' %}">Last 15 days</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{% url 'about' %}">About</a>
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="list-group">
   <a href="{% url 'index' %}" class="list-group-item list-group-item-action">Latest</a>
   <a href="{% url 'sevendays' %}" class="list-group-item list-group-item-action active">Last 7 Days</a>
-  <a href="{% url 'thirtydays' %}" class="list-group-item list-group-item-action">Last 30 Days</a>
+  <a href="{% url 'fifteendays' %}" class="list-group-item list-group-item-action">Last 15 Days</a>
 </div>
 <br>
 <div class="list-group">
