@@ -7,3 +7,4 @@ whitenoise
 gunicorn
 tensorflow==1.14
 html5lib
+pandas

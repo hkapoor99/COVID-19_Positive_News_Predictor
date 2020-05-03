@@ -9,6 +9,7 @@ from keras.models import Sequential
 from keras.models import load_model
 from keras.models import model_from_json
 from keras.backend import clear_session
+import pandas as pd
 
 # Create your views here.
 def index(request):
