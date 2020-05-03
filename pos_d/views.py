@@ -12,15 +12,21 @@ from keras.backend import clear_session
 
 # Create your views here.
 def index(request):
-    clear_session()
     with open('models/tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
 
-    json_file = open('models/lstm_model.json', 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = model_from_json(loaded_model_json)
-    loaded_model.load_weights("models/lstm_model.h5")
+    json_file_c = open('models/lstm_model_c.json', 'r')
+    loaded_model_json_c = json_file_c.read()
+    json_file_c.close()
+    loaded_model_c = model_from_json(loaded_model_json_c)
+    loaded_model_c.load_weights("models/lstm_model_c.h5")
+
+    json_file_s = open('models/lstm_model_s.json', 'r')
+    loaded_model_json_s = json_file_s.read()
+    json_file_s.close()
+    loaded_model_s = model_from_json(loaded_model_json_s)
+    loaded_model_s.load_weights("models/lstm_model_s.h5")
+
     headlines = []
     dates = []
     imageurls = []
@@ -32,12 +38,13 @@ def index(request):
 
     soup = BeautifulSoup(r.content, "html5lib")
     for i in soup.find_all("div", {"class": "news-card z-depth-1"}):
-        headline = i.find("span", {"itemprop": "headline"}).text
-        text = [headline]
+        t = i.find("span", {"itemprop": "headline"}).text + " " + i.find("div", {"itemprop": "articleBody"}).text
+        text = [t]
         twt = tokenizer.texts_to_sequences(text)
         twt = pad_sequences(twt, maxlen=19, dtype='int32', value=0)
-        sentiment = loaded_model.predict(twt, batch_size=1, verbose=2)[0]
-        if sentiment[1] > 0.5 :
+        sentiment_c = loaded_model_c.predict(twt, batch_size=1, verbose=2)[0]
+        sentiment_s = loaded_model_s.predict(twt, batch_size=1, verbose=2)[0]
+        if sentiment_c[1] > 0.5 and sentiment_s[1]>0.8:
             headlines.append(i.find("span", {"itemprop": "headline"}).text)
             dates.append(i.find("span", {"clas": "date"}).text)
             imageurls.append(i.find("div", {"class": "news-card-image"}).get("style").replace("background-image: url(\'", "").replace("?\')", ""))
