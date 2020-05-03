@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from bs4 import BeautifulSoup
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import pickle
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -68,64 +68,110 @@ def index(request):
 
 
 def sevendays(request):
-    url = 'https://inshorts.com/en/read/national'
-    r = requests.get(url)
-    soup = BeautifulSoup(r.content, "html5lib")
-    headline = []
-    date = []
-    imageurl = []
-    description = []
-    source = []
-    for i in soup.find_all("span", {"itemprop": "headline"}):
-        headline.append(i.text)
-    for i in soup.find_all("span", {"clas": "date"}):
-        date.append(i.text)
-    for i in soup.find_all("div", {"class": "news-card-image"}):
-        url = i.get("style").replace("background-image: url(\'", "")
-        url = url.replace("?\')", "")
-        imageurl.append(url)
-    for i in soup.find_all("div", {"itemprop": "articleBody"}):
-        description.append(i.text)
-    for i in soup.find_all("a", {"class": "source"}):
-        source.append(i.get("href"))
+    with open('models/tokenizer_c.pickle', 'rb') as handle:
+        tokenizer = pickle.load(handle)
+
+    json_file_c = open('models/lstm_model_c.json', 'r')
+    loaded_model_json_c = json_file_c.read()
+    json_file_c.close()
+    loaded_model_c = model_from_json(loaded_model_json_c)
+    loaded_model_c.load_weights("models/lstm_model_c.h5")
+
+    json_file_s = open('models/lstm_model_s.json', 'r')
+    loaded_model_json_s = json_file_s.read()
+    json_file_s.close()
+    loaded_model_s = model_from_json(loaded_model_json_s)
+    loaded_model_s.load_weights("models/lstm_model_s.h5")
+
+    headlines = []
+    dates = []
+    imageurls = []
+    descriptions = []
+    sources = []
+
+    data = pd.read_csv("models/data_30.csv")
+    date2 = []
+    for i in data["Date"]:
+        date2.append(datetime.strptime(i, '%Y-%m-%d').date())
+    data["Date"] = date2
+    data_30 = data.loc[data["Date"] >= (datetime.now().date() - timedelta(days=7)))]
+
+    for i, row  in data_30.iterrows() :
+        t = row["Text"]
+        text = [t]
+        twt = tokenizer.texts_to_sequences(text)
+        twt = pad_sequences(twt, maxlen=86, dtype='int32', value=0)
+        sentiment_c = loaded_model_c.predict(twt, batch_size=1, verbose=2)[0]
+        sentiment_s = loaded_model_s.predict(twt, batch_size=1, verbose=2)[0]
+        if sentiment_c[1] > 0.5 and sentiment_s[1]>0.8:
+            headlines.append(row["Headline"])
+            dates.append(row["Date"])
+            imageurls.append(row["Image"])
+            descriptions.append(row["Description"])
+            sources.append(row["Source"])
+        else:
+            continue;
 
     context = {
-        "Headlines" : headline,
-        "Descriptions" : description,
-        "BottomTexts" : source,
-        "ImageURLs": imageurl,
-        "Dates" : date
+        "Headlines" : headlines,
+        "Descriptions" : descriptions,
+        "BottomTexts" : sources,
+        "ImageURLs": imageurls,
+        "Dates" : dates
     }
     return render(request, "pos_d/7days.html", context)
 
 def thirtydays(request):
-    url = 'https://inshorts.com/en/read/national'
-    r = requests.get(url)
-    soup = BeautifulSoup(r.content, "html5lib")
-    headline = []
-    date = []
-    imageurl = []
-    description = []
-    source = []
-    for i in soup.find_all("span", {"itemprop": "headline"}):
-        headline.append(i.text)
-    for i in soup.find_all("span", {"clas": "date"}):
-        date.append(i.text)
-    for i in soup.find_all("div", {"class": "news-card-image"}):
-        url = i.get("style").replace("background-image: url(\'", "")
-        url = url.replace("?\')", "")
-        imageurl.append(url)
-    for i in soup.find_all("div", {"itemprop": "articleBody"}):
-        description.append(i.text)
-    for i in soup.find_all("a", {"class": "source"}):
-        source.append(i.get("href"))
+    with open('models/tokenizer_c.pickle', 'rb') as handle:
+        tokenizer = pickle.load(handle)
+
+    json_file_c = open('models/lstm_model_c.json', 'r')
+    loaded_model_json_c = json_file_c.read()
+    json_file_c.close()
+    loaded_model_c = model_from_json(loaded_model_json_c)
+    loaded_model_c.load_weights("models/lstm_model_c.h5")
+
+    json_file_s = open('models/lstm_model_s.json', 'r')
+    loaded_model_json_s = json_file_s.read()
+    json_file_s.close()
+    loaded_model_s = model_from_json(loaded_model_json_s)
+    loaded_model_s.load_weights("models/lstm_model_s.h5")
+
+    headlines = []
+    dates = []
+    imageurls = []
+    descriptions = []
+    sources = []
+
+    data = pd.read_csv("models/data_30.csv")
+    date2 = []
+    for i in data["Date"]:
+        date2.append(datetime.strptime(i, '%Y-%m-%d').date())
+    data["Date"] = date2
+    data_7 = data.loc[data["Date"] >= (datetime.now().date() - timedelta(days=30)))]
+
+    for i, row  in data_7.iterrows() :
+        t = row["Text"]
+        text = [t]
+        twt = tokenizer.texts_to_sequences(text)
+        twt = pad_sequences(twt, maxlen=86, dtype='int32', value=0)
+        sentiment_c = loaded_model_c.predict(twt, batch_size=1, verbose=2)[0]
+        sentiment_s = loaded_model_s.predict(twt, batch_size=1, verbose=2)[0]
+        if sentiment_c[1] > 0.5 and sentiment_s[1]>0.8:
+            headlines.append(row["Headline"])
+            dates.append(row["Date"])
+            imageurls.append(row["Image"])
+            descriptions.append(row["Description"])
+            sources.append(row["Source"])
+        else:
+            continue;
 
     context = {
-        "Headlines" : headline,
-        "Descriptions" : description,
-        "BottomTexts" : source,
-        "ImageURLs": imageurl,
-        "Dates" : date
+        "Headlines" : headlines,
+        "Descriptions" : descriptions,
+        "BottomTexts" : sources,
+        "ImageURLs": imageurls,
+        "Dates" : dates
     }
     return render(request, "pos_d/30days.html", context)
 
