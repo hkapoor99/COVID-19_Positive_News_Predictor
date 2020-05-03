@@ -12,7 +12,7 @@ from keras.backend import clear_session
 
 # Create your views here.
 def index(request):
-    with open('models/tokenizer.pickle', 'rb') as handle:
+    with open('models/tokenizer_c.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
 
     json_file_c = open('models/lstm_model_c.json', 'r')
