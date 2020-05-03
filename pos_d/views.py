@@ -94,7 +94,7 @@ def sevendays(request):
     for i in data["Date"]:
         date2.append(datetime.strptime(i, '%Y-%m-%d').date())
     data["Date"] = date2
-    data_30 = data.loc[data["Date"] >= (datetime.now().date() - timedelta(days=7)))]
+    data_30 = data.loc[data["Date"] >= (datetime.now().date() - timedelta(days=7))]
 
     for i, row  in data_30.iterrows() :
         t = row["Text"]
@@ -148,7 +148,7 @@ def thirtydays(request):
     for i in data["Date"]:
         date2.append(datetime.strptime(i, '%Y-%m-%d').date())
     data["Date"] = date2
-    data_7 = data.loc[data["Date"] >= (datetime.now().date() - timedelta(days=30)))]
+    data_7 = data.loc[data["Date"] >= (datetime.now().date() - timedelta(days=30))]
 
     for i, row  in data_7.iterrows() :
         t = row["Text"]
