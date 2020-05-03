@@ -96,6 +96,7 @@ def sevendays(request):
         date2.append(datetime.strptime(i, '%Y-%m-%d').date())
     data["Date2"] = date2
     data_7 = data.loc[data["Date2"] >= (datetime.now().date() - timedelta(days=7))]
+    data_7 = data_7.sample(frac = 0.4)
 
     for i, row  in data_7.iterrows() :
         t = row["Text"]
@@ -150,6 +151,7 @@ def fifteendays(request):
         date2.append(datetime.strptime(i, '%Y-%m-%d').date())
     data["Date2"] = date2
     data_15 = data.loc[data["Date2"] >= (datetime.now().date() - timedelta(days=15))]
+    data_15 = data_15.sample(frac = 0.15)
 
     for i, row  in data_15.iterrows() :
         t = row["Text"]
