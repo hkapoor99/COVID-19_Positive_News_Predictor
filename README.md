@@ -1,3 +1,6 @@
+# - Link 
+Https://covid-positive-news.herokuapp.com
+
 # - How it works
 It collects live news from <a href="https://www.inshorts.com/en/read/national">Inshorts.com</a> and runs two pre-trained deep learning LSTM models on each article. First model classifies if the article is related to the COVID-19 pandemic and the second runs a sentiment analysis. The article is displayed only if it is predicted to be positive.
 
